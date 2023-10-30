@@ -4,34 +4,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import dbConnection from './config.js';
-import postModel from './models/post.js';
-const typeDefs = `#graphql
-type Post{
-  id: ID!,
-  description: String!,
-  username: String!
-} 
-type Query{
-  getPosts:[Post]
+import typeDefs from './graphql/typeDefs.js';
+import resolvers from './graphql/resolvers/index.js';
 
- }
-`
-;
-const resolvers ={
-  Query :{
-   async getPosts(){
-    try{
-    const posts= await postModel.find()
-    return posts
-    }
-    catch(err){
-    throw new Error(err)
-    }
-  }
-
-}
-}
-dbConnection(); 
+dbConnection();
 
 const server =new ApolloServer({
   typeDefs,
