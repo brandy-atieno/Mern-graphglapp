@@ -11,7 +11,8 @@ dbConnection();
 
 const server =new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context:({req})=>({req}) //forward the request body
 })
 const {url}= await startStandaloneServer(
   server,{ listen : {port:4000}}
